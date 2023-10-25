@@ -5,6 +5,13 @@ then east. The solver then repeatedly removes the first position from the queue 
 them to the queue if they have not already been visited. When the solver reaches the finish spot (denoted with 'f'), it backtraces and 
 returned the solved maze.
 
+This project is not intended to implement the most valuable maze solving algorithm, but rather, demonstrate my understanding of a number of topics, such as:  
+- Dynamic memory allocation of arrays and 2D arrays.  
+- Proper use of structs and classes in different files.  
+- Implementation of a queue data structure.  
+- Implementing the breadth-first search (BFS) algorithm.  
+
+
 The start is denoted with 's'.
 The finish is denoted with 'f'.
 Open spots are denoted with '.'.
