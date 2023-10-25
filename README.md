@@ -16,7 +16,7 @@ The unsolved maze in the specified format must follow.
 
 Exp)
 
-3 5 \n
-.s..#
-.##.#
+3 5  
+.s..#  
+.##.#  
 ..f..
