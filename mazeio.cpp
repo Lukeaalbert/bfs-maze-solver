@@ -7,7 +7,7 @@ mazeio.cpp
 #include "mazeio.h"
 using namespace std;
  
-
+//read the infile using iostream. Return in any case of incorrect formatting.
 char** read_maze(char* filename, int* rows, int* cols)
 {
   ifstream ifile(filename); //opening file
