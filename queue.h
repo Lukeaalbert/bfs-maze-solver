@@ -1,19 +1,15 @@
 /* 
 queue.h
 
-Author: CS 103 Course Staff
-
-Description: Declares two new data types,
+Declares two new data types,
 - Location, a data type containing a row and column number
 - Queue, a list of Locations organized chronologically
-
-You shouldn't change this file.
 */
 
 #ifndef QUEUE_H
 #define QUEUE_H
 
-// e.g. position [3][5] in an array would have row 3, col 5
+
 struct Location {
    int row;
    int col;
@@ -23,11 +19,10 @@ struct Location {
 class Queue {
 public: // API:
    
-   // constructor. maxlen must be as large as the total number
-   // of Locations that will ever be entered into this Queue.
+   // constructor.
    Queue(int maxlen);
    
-   // destructor. releases resources. C++ will call it automatically.
+   // destructor.
    ~Queue();
    
    // insert a new Location at the end/back of our list   
@@ -36,16 +31,16 @@ public: // API:
    // return and "remove" the oldest Location not already extracted
    Location remove_from_front();
 
-   // is this Queue empty? (did we extract everything added?)
+   // is this Queue empty?
    bool is_empty();
 
    // member variables of an Queue, for implementation:
 private:
    Location* contents; // ptr to dynamically-allocated array
-   int tail; // how many Locations were added so far?
-             // (index of next free item at the end)
-   int head; // how many Locations were extracted so far?
-             // (index of the first occupied location)
+   int tail;
+             
+   int head; 
+            
 };
 
 #endif
