@@ -29,8 +29,7 @@ Location Queue::remove_from_front() {
     return contents[returnHead];
 }
 
-//Is this Queue empty? (did we extract everything added?)
-//This is complete, you don't need to change it.
+//Check if empty
 bool Queue::is_empty() {
     return head == tail;
 }
