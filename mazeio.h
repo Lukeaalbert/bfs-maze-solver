@@ -1,11 +1,6 @@
 /* 
 mazeio.h
-
-Author: CS 103 Course Staff
-
-Description: Input and output routines for BFS assignment.
-
-You shouldn't change this file.
+Input and output routines for BFS assignment.
 */
 
 #ifndef MAZEIO_H
@@ -17,5 +12,3 @@ char** read_maze(char* filename, int* rows, int* cols);
 
 // print maze to cout
 void print_maze(char** maze, int rows, int cols);
-
-#endif
