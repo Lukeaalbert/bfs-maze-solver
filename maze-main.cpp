@@ -1,11 +1,14 @@
 /*
-maze.cpp
+maze-main.cpp
+Main code and maze_search, invalidChar, invalidMaze, and backtraceAndDeallocate functions.
+Compile and input file name of unsolved maze in specified format. Open and read with iostream, solve.
 */
 
 #include <iostream>
 #include "mazeio.h"
 #include "queue.h"
 using namespace std;
+
 
 // *********************************************************************************************
 // **************************** All Prototypes *************************************************
@@ -14,88 +17,6 @@ int maze_search(char**, int, int);
 bool invalidChar(char**, int, int);
 bool invalidMaze(char**, int, int);
 void backtraceAndDeallocate(Location**, char**, char**, Location, Location, int);
-
-// *********************************************************************************************
-// **************************** Main, Begin ****************************************************
-// *********************************************************************************************
-int main(int argc, char* argv[]) 
-{
-  //-----------------Start: read infile, check if valid, call function to read maze ----------
-    int rows, cols, result;
-    char** mymaze=NULL;
-    const char* invalid_char_message = "Error, invalid character.";
-    const char* invalid_maze_message = "Invalid maze.";
-    const char* no_path_message = "No path could be found!";
-
-    if(argc < 2) //if there isn't an input file:
-    {
-        cout << "Please provide a maze input file" << endl;
-        return -1;
-    }
-
-    mymaze = read_maze(argv[1], &rows, &cols); //read maze
-
-    //-----------------End: read infile, check if valid, call function to read maze ----------
-
-    // ------------Start: checks for invalid character or invalid maze ---------------------
-      if (invalidChar((char**)mymaze, rows, cols) == true) //invalidChar checker
-      {
-        cout << invalid_char_message;
-        for (int i = 0; i < rows; i++)
-        {
-          delete [] mymaze[i];
-        }
-        delete [] mymaze;
-        return 0;
-      }
-
-      if (invalidMaze((char**)mymaze, rows, cols) == true) //invalidMaze checker
-      {
-        cout << invalid_maze_message;
-        for (int i = 0; i < rows; i++)
-        {
-          delete [] mymaze[i];
-        }
-        delete [] mymaze;
-        return -1;
-      }
-
-    // ------------End: checks for invalid character or invalid maze ---------------------
-
-    // ------------Start: Search the maze, check if path, print the maze --------
-    result = maze_search((char**)mymaze, rows, cols); //putting maze search in result value
-
-    if ( result == 0 ) //checking if no path found
-    {
-      cout << no_path_message;
-      for (int i = 0; i < rows; i++)
-      {
-        delete [] mymaze[i];
-      }
-      delete [] mymaze;
-      return 0;
-    }
-    else //checking if path found. printing maze if so. 
-    {
-      print_maze((char**)mymaze, rows, cols);
-    }
-    // ------------End: Search the maze, check if path, print the maze --------
-
-    //---------------Start: Final step. Everything worked, deallocate memeory ------------
-    for (int i = 0; i < rows; i++)
-    {
-      delete [] mymaze[i];
-    }
-    delete [] mymaze;
-    return 0; //main return
-    //---------------End: Final step. Everything worked, deallocate memeory ------------
-}
-
-// *********************************************************************************************
-// **************************** Main, End ******************************************************
-// *********************************************************************************************
-
-
 
 // *********************************************************************************************
 // **************************** Maze_Search, Begin *********************************************
@@ -123,8 +44,7 @@ int maze_search(char** maze, int rows, int cols)
       }
     }
   }
-
-  //-----------------Start: find the start and finish locations ------------------------
+  //-----------------End: find the start and finish locations ------------------------
 
   //-----------------Start: Create the Queue, add start to the Queue -------------------
   Queue myQueue(rows*cols);//queue of size row*col
@@ -167,7 +87,7 @@ int maze_search(char** maze, int rows, int cols)
 
   //-----------------End: Create and allocate predecessor and visited ----------------
 
-  // ************************************ Maze Loop Time! *************************************
+  // ************************************ breadth-first search *************************************
   Location curr; //Declare curr
   while (!myQueue.is_empty())
   {
@@ -342,4 +262,84 @@ void backtraceAndDeallocate(Location** predecessor, char** maze, char** visited,
 }
 // *********************************************************************************************
 // **************************** backtraceAndDeallocate, End ************************************
+// *********************************************************************************************
+
+
+// *********************************************************************************************
+// **************************** Main, Begin ****************************************************
+// *********************************************************************************************
+int main(int argc, char* argv[]) 
+{
+  //-----------------Start: read infile, check if valid, call function to read maze ----------
+    int rows, cols, result;
+    char** mymaze=NULL;
+    const char* invalid_char_message = "Error, invalid character.";
+    const char* invalid_maze_message = "Invalid maze.";
+    const char* no_path_message = "No path could be found!";
+
+    if(argc < 2) //if there isn't an input file:
+    {
+        cout << "Please provide a maze input file" << endl;
+        return -1;
+    }
+
+    mymaze = read_maze(argv[1], &rows, &cols); //read maze
+
+    //-----------------End: read infile, check if valid, call function to read maze ----------
+
+    // ------------Start: checks for invalid character or invalid maze ---------------------
+      if (invalidChar((char**)mymaze, rows, cols) == true) //invalidChar checker
+      {
+        cout << invalid_char_message;
+        for (int i = 0; i < rows; i++)
+        {
+          delete [] mymaze[i];
+        }
+        delete [] mymaze;
+        return 0;
+      }
+
+      if (invalidMaze((char**)mymaze, rows, cols) == true) //invalidMaze checker
+      {
+        cout << invalid_maze_message;
+        for (int i = 0; i < rows; i++)
+        {
+          delete [] mymaze[i];
+        }
+        delete [] mymaze;
+        return -1;
+      }
+
+    // ------------End: checks for invalid character or invalid maze ---------------------
+
+    // ------------Start: Search the maze, check if path, print the maze --------
+    result = maze_search((char**)mymaze, rows, cols); //putting maze search in result value
+
+    if ( result == 0 ) //checking if no path found
+    {
+      cout << no_path_message;
+      for (int i = 0; i < rows; i++)
+      {
+        delete [] mymaze[i];
+      }
+      delete [] mymaze;
+      return 0;
+    }
+    else //checking if path found. printing maze if so. 
+    {
+      print_maze((char**)mymaze, rows, cols);
+    }
+    // ------------End: Search the maze, check if path, print the maze --------
+
+    //---------------Start: Final step. Everything worked, deallocate memeory ------------
+    for (int i = 0; i < rows; i++)
+    {
+      delete [] mymaze[i];
+    }
+    delete [] mymaze;
+    return 0; //main return
+    //---------------End: Final step. Everything worked, deallocate memeory ------------
+}
+// *********************************************************************************************
+// **************************** Main, End ******************************************************
 // *********************************************************************************************
